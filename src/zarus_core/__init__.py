@@ -1,19 +1,15 @@
 """Public package exports for zarus_core."""
 
-from .config import ConfigurationReader, load_settings
-from .logging import CustomLogging
+from .reader import ConfigurationReader
+from .logger import CustomLogging
+from .config import ApiConfig
+from .base_service import MqttBaseService, MqttConfig
 
-try:
-    from .mqtt import MqttBaseService, MqttConfig
-except Exception:
-    MqttBaseService = None  # type: ignore[assignment]
-    MqttConfig = None  # type: ignore[assignment]
 
 __all__ = [
     "ConfigurationReader",
     "CustomLogging",
-    "load_settings",
+    "MqttBaseService",
+    "MqttConfig",
+    "ApiConfig"
 ]
-
-if MqttBaseService is not None and MqttConfig is not None:
-    __all__.extend(["MqttBaseService", "MqttConfig"])
