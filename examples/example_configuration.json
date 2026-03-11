@@ -1,0 +1,269 @@
+{
+    "mqtt": {
+        "brokerAddress": "localhost",
+        "mqttUser": "user",
+        "mqttPass": "password",
+        "port": 1883,
+        "publishTopics": [
+            {
+                "commandName": "transaction_log",
+                "topic": "topic/log"
+            },
+            {
+                "commandName": "notification",
+                "topic": "topic/notification"
+            }
+        ],
+        "subscriptionTopics": [
+            {
+                "commandName": "welcome_car",
+                "topic": "assistant/say/welcome/car"
+            },
+            {
+                "commandName": "good_morning",
+                "topic": "assistant/say/goodmorning"
+            }
+        ]
+    },
+    "database": {
+        "mariadb": {
+            "host": "127.0.0.1",
+            "user": "user",
+            "password": "password",
+            "database": "db"
+        }
+    },
+    "apiService": {
+        "host": "http://localhost",
+        "port": "8080",
+        "secretToken": "token",
+        "apis": [
+            {
+                "name": "Cedula API",
+                "endpoint": "/cedula",
+                "method": "GET",
+                "description": "Busca información de una cédula"
+            },
+            {
+                "name": "Placa API",
+                "endpoint": "/placa",
+                "method": "GET",
+                "description": "Busca información de una placa"
+            }
+        ]
+    },
+    "spotify": {
+        "clientId": "00000000000000000000000000000000",
+        "clientSecret": "00000000000000000000000000000000",
+        "redirectUrl": "http://localhost:8000",
+        "librespotName": "Speaker"
+    },
+    "openai": {
+        "apiKey": "1111111111111111111111111111111111",
+        "model": "gpt-3.5-turbo",
+        "maxTokensPerRequestsSended": "800",
+        "maxTokensPerRequestsRecieved": "600",
+        "maxTokensPerDay": "12000",
+        "usedCharsFilename": "tokensSended.log",
+        "initialConversation": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant with access to my smart home information, similar to Jarvis from Iron Man. Your purpose is to provide relevant information in a friendly, respectful, and concise manner."
+            }
+        ]
+    },
+    "telegram": {
+        "enableChats": [
+            {
+                "chatId": 123456789,
+                "user": "User One",
+                "nickname": "Nick1"
+            },
+            {
+                "chatId": 987654321,
+                "user": "User Two",
+                "nickname": "Nick2"
+            }
+        ],
+        "notificationChats": [
+            {
+                "chatId": 123456789
+            }
+        ],
+        "alertChats": [
+            123456789,
+            987654321
+        ],
+        "bots": {
+            "mybot": {
+                "name": "MyBot",
+                "description": "A personal telegram bot",
+                "botToken": "1234567890:ABCdefGHIjklMNOpqrsTUVwxyz123456789",
+                "commands": {
+                    "help": {
+                        "name": "/help",
+                        "description": "Muestra comandos disponibles",
+                        "handler": "help_command"
+                    },
+                    "cedula": {
+                        "name": "/cedula",
+                        "description": "Buscar información por cédula",
+                        "prompt": "Digite la cédula sin espacios ni guiones.\n\nEjemplo: <code>132485696</code>",
+                        "processing": "Revisando cédula: <code>{valor}</code>...",
+                        "handler": "start_cedula",
+                        "type": "conversation"
+                    },
+                    "placa": {
+                        "name": "/placa",
+                        "description": "Buscar información por placa",
+                        "prompt": "¿Cuál es la placa {pronombre}?\n\nEjemplo: <code>ABC123</code>",
+                        "processing": "Revisando placa: <code>{valor}</code>...",
+                        "handler": "start_placa",
+                        "type": "conversation"
+                    }
+                },
+                "messages": {
+                    "start": "Hello {nombre}! I'm MyBot 🤖",
+                    "commands_header": "Available commands:",
+                    "cancel": "Operation cancelled."
+                }
+            }
+        }
+    },
+    "homeAssistant": {
+        "url": "http://localhost:8123/api",
+        "haToken": "your_home_assistant_token_here_xxxxxxxxxxxxxxxx",
+        "people": [
+            {
+                "name": "Person One",
+                "id": "person.person1"
+            },
+            {
+                "name": "Person Two",
+                "id": "person.person2"
+            }
+        ],
+        "calendars": [
+            {
+                "owner": "Person One",
+                "id": "calendar.person1"
+            },
+            {
+                "owner": "Family",
+                "id": "calendar.family"
+            }
+        ],
+        "binarySensors": [
+            {
+                "name": "Garage Door",
+                "id": "binary_sensor.porton_sensor",
+                "offValue": "Close",
+                "onValue": "Open"
+            },
+            {
+                "name": "Car Detected in garage",
+                "id": "binary_sensor.car_sensor",
+                "offValue": "Not in Garage",
+                "onValue": "At home"
+            }
+        ],
+        "sensors": [
+            {
+                "name": "Temperature inside the house",
+                "id": "sensor.tasmota_temperature",
+                "ignoringStates": []
+            }
+        ],
+        "generalDevices": [
+            {
+                "name": "Robot Vacuum Cleaner",
+                "id": "vacuum.cleaner",
+                "ignoringStates": [
+                    "docked"
+                ]
+            },
+            {
+                "name": "Weather Forecast",
+                "id": "weather.home",
+                "ignoringStates": []
+            }
+        ]
+    },
+    "audio": {
+        "files": [
+            {
+                "id": "welcome",
+                "file_name": "welcome.wav"
+            },
+            {
+                "id": "bye",
+                "file_name": "bye.wav"
+            }
+        ]
+    },
+    "services": [
+        {
+            "type": "DockerService",
+            "name": "Home Assistant",
+            "container_name": "homeassistant",
+            "ip": "http://192.168.1.100:8123"
+        },
+        {
+            "type": "DockerService",
+            "name": "ESPHome",
+            "container_name": "esphome",
+            "ip": "http://192.168.1.100:6052"
+        },
+        {
+            "type": "DockerService",
+            "name": "Zigbee2MQTT",
+            "container_name": "zigbee2mqtt",
+            "ip": "http://192.168.1.100:8080"
+        },
+        {
+            "type": "DockerService",
+            "name": "MQTT Broker",
+            "container_name": "mosquitto"
+        },
+        {
+            "type": "DockerService",
+            "name": "Grafana",
+            "container_name": "grafana",
+            "ip": "http://192.168.1.100:3000"
+        },
+        {
+            "type": "DockerService",
+            "name": "Portainer",
+            "container_name": "portainer",
+            "ip": "http://192.168.1.100:9000"
+        },
+        {
+            "type": "DockerService",
+            "name": "Database",
+            "container_name": "mariadb"
+        },
+        {
+            "type": "DockerService",
+            "name": "Custom Service 1",
+            "container_name": "custom_service_1"
+        },
+        {
+            "type": "DockerService",
+            "name": "Custom Service 2",
+            "container_name": "custom_service_2",
+            "ip": "http://192.168.1.100:8888"
+        },
+        {
+            "type": "SystemdService",
+            "name": "Audio Service",
+            "service_name": "audio_service",
+            "user_mode": true
+        },
+        {
+            "type": "SystemdService",
+            "name": "Background Service",
+            "service_name": "background_service",
+            "user_mode": false
+        }
+    ]
+}
