@@ -4,6 +4,7 @@ from .reader import ConfigurationReader
 from .logger import CustomLogging
 from .config import ApiConfig
 from .base_service import MqttBaseService, MqttConfig
+from .mariadb_client import MariaDBClient
 
 
 __all__ = [
@@ -11,5 +12,6 @@ __all__ = [
     "CustomLogging",
     "MqttBaseService",
     "MqttConfig",
-    "ApiConfig"
+    "ApiConfig",
+    "MariaDBClient",
 ]

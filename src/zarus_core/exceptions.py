@@ -11,3 +11,7 @@ class ConfigurationError(ZarusCoreError):
 
 class MqttServiceError(ZarusCoreError):
     """Raised for MQTT service lifecycle and runtime errors."""
+
+
+class MariaDBClientError(ZarusCoreError):
+    """Raised for MariaDB client initialization and runtime errors."""

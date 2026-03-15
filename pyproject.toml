@@ -13,7 +13,8 @@ authors = [
   { name = "Zarus Core Contributors" }
 ]
 dependencies = [
-  "paho-mqtt>=1.6.1,<2.0.0"
+  "paho-mqtt>=1.6.1,<2.0.0",
+  "mysql-connector-python>=8.0.0"
 ]
 
 [project.optional-dependencies]
