@@ -25,7 +25,7 @@ Usage Example:
 """
 
 import paho.mqtt.client as mqtt
-from typing import Callable, Optional, List, Dict, Any
+from typing import Callable, Optional, List, Dict
 import logging
 
 from .exceptions import MqttServiceError
@@ -153,6 +153,7 @@ class MqttBaseService:
             self.logger.warning("Already connected to MQTT broker")
             return
         
+        self._is_connected = False
         self.logger.info(f"Connecting to MQTT broker at {self.config.broker_address}")
         
         # Create MQTT client
@@ -183,18 +184,20 @@ class MqttBaseService:
         try:
             client.connect(self.config.broker_address, self.config.port)
             client.loop_start()
-            self._is_connected = True
-            self.logger.info("MQTT client connected and loop started")
+            self.logger.info("MQTT client connection initiated and loop started")
         except Exception as e:
+            self._is_connected = False
             self.logger.error(f"Failed to connect to MQTT broker: {e}")
             raise
     
     def _on_connect(self, client, userdata, flags, rc):
         """Internal callback when connection is established"""
         if rc == 0:
+            self._is_connected = True
             self.logger.info("Successfully connected to MQTT broker")
             self._subscribe_to_topics()
         else:
+            self._is_connected = False
             self.logger.error(f"Connection failed with result code: {rc}")
     
     def _on_disconnect(self, client, userdata, rc):
@@ -367,7 +370,7 @@ class MqttBaseService:
     
     def disconnect(self):
         """Disconnect from MQTT broker and stop loop"""
-        if self.client and self._is_connected:
+        if self.client:
             self.logger.info("Disconnecting from MQTT broker")
             self.client.loop_stop()
             self.client.disconnect()

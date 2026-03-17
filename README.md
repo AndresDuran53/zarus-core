@@ -73,7 +73,7 @@ zarus-core/
 │   ├── logging/             # Logging utilities
 │   │   └── logger.py        #   CustomLogging
 │   ├── mqtt/                # MQTT services
-│   │   └── base_service.py  #   MqttBaseService, MqttConfig
+│   │   └── mqtt_base_service.py  #   MqttBaseService, MqttConfig
 │   ├── exceptions.py        # Package exceptions
 │   └── __init__.py          # Public API
 ├── examples/                # Working examples
