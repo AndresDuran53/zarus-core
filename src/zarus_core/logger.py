@@ -129,7 +129,7 @@ class CustomLogging:
             project_logger.handlers.clear()
 
             standard_formatter = logging.Formatter(
-                fmt="[%(asctime)s] %(levelname)s - [%(name)s:%(module)s:%(funcName)s:%(lineno)d] - %(message)s",
+                fmt="[%(asctime)s] %(levelname)s - [%(name)s] - %(message)s",
                 datefmt=cls._project_datefmt,
             )
             json_formatter = _JSONFormatter(datefmt=cls._project_datefmt)
